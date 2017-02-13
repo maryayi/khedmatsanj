@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <title>خدمت‌سنج</title>
+    <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="./bower_components/persian-date/dist/0.1.8/persian-date-0.1.8.min.js"></script>
+    <script src="./bower_components/persian-datepicker/dist/js/persian-datepicker-0.4.5.min.js"></script>
+    <script src="./bower_components/moment/min/moment.min.js"></script>
+    <script src="./bower_components/moment-jalaali/build/moment-jalaali.js"></script>
+    <link rel="stylesheet" type="text/css" href="./bower_components/persian-datepicker/dist/css/persian-datepicker-0.4.5.min.css">
+</head>
+
+<body>
+    <input type="text" class="start" placeholder="تاریخ شروع خدمت را وارد کنید" />
+    <input type="text" class="end" placeholder="تاریخ پایان خدمت را وارد کنید" />
+    <button type="button">بزن بریم!</button>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".start").pDatepicker({
+                format: "YYYY - MM - DD"
+            });
+            $(".end").pDatepicker({
+                format: "YYYY - MM - DD"
+            });
+            $(".start").val("");
+            $(".end").val("");
+        });
+    </script>
+</body>
+
+</html>

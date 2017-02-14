@@ -9,6 +9,7 @@
     <script src="./bower_components/persian-datepicker/dist/js/persian-datepicker-0.4.5.min.js"></script>
     <script src="./bower_components/moment/min/moment.min.js"></script>
     <script src="./bower_components/moment-jalaali/build/moment-jalaali.js"></script>
+    <script src="./bower_components/chart.js/dist/Chart.min.js"></script>
     <link rel="stylesheet" type="text/css" href="./bower_components/persian-datepicker/dist/css/persian-datepicker-0.4.5.min.css">
 </head>
 
@@ -19,13 +20,24 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(".start").pDatepicker({
-                format: "YYYY - MM - DD"
+                format: "YYYY/MM/DD"
             });
             $(".end").pDatepicker({
-                format: "YYYY - MM - DD"
+                format: "YYYY/MM/DD"
             });
             $(".start").val("");
             $(".end").val("");
+            $('button').on('click',function(){
+                var startJDate = moment($(".start").val(),'jYYYY/jM/jD');
+                var endJDate = moment($(".end").val(),'jYYYY/jM/jD');
+                var now = moment();
+                console.log(startJDate.format('jYYYY/jM/jD'));
+                console.log(endJDate.format('jYYYY/jM/jD'));
+                console.log(now.format('jYYYY/jM/jD'));
+                var passedDayes = now.diff(startJDate, 'days');
+                var remainedDayes = endJDate.diff(now, 'days');
+                console.log(passedDayes + ' days passed and ' + remainedDayes + ' days remained!');
+            })
         });
     </script>
 </body>

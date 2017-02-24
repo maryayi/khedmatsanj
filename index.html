@@ -10,33 +10,57 @@
     <script src="./bower_components/moment/min/moment.min.js"></script>
     <script src="./bower_components/moment-jalaali/build/moment-jalaali.js"></script>
     <script src="./bower_components/chart.js/dist/Chart.min.js"></script>
+    <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap-rtl/dist/css/bootstrap-rtl.min.css">
     <link rel="stylesheet" type="text/css" href="./bower_components/persian-datepicker/dist/css/persian-datepicker-0.4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.min.css">
 </head>
 
 <body>
+  <header>
+    <h1>خدمت‌سنج</h1>
+    <p>یادگاری یک برنامه‌نویس از دوران خدمت!</p>
+  </header>
+<div class="container">
     <input type="text" class="start" placeholder="تاریخ شروع خدمت را وارد کنید" />
-    <input type="text" class="end" placeholder="تاریخ پایان خدمت را وارد کنید" />
+    <div class="checkbox">
+        <label>
+    <input type="checkbox" name="kasri" id="kasri" value="kasri">
+    کسری دارم
+  </label>
+    </div>
+    <div class="checkbox">
+        <label>
+    <input type="checkbox" name="ezafi" id="ezafi" value="ezafi">
+    اضافه خدمت دارم
+  </label>
+    </div>
+
+
     <button type="button">بزن بریم!</button>
+
+</div>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $('input[type="checkbox"]').on('change', function () {
+                $('input[type="checkbox"]').not(this).prop('checked', false);
+            });
+
             $(".start").pDatepicker({
                 format: "YYYY/MM/DD"
             });
-            $(".end").pDatepicker({
-                format: "YYYY/MM/DD"
-            });
             $(".start").val("");
-            $(".end").val("");
-            $('button').on('click',function(){
-                var startJDate = moment($(".start").val(),'jYYYY/jM/jD');
-                var endJDate = moment($(".end").val(),'jYYYY/jM/jD');
+            $('button').on('click', function () {
+                var startJDate = moment($(".start").val(), 'jYYYY/jM/jD');
                 var now = moment();
                 console.log(startJDate.format('jYYYY/jM/jD'));
-                console.log(endJDate.format('jYYYY/jM/jD'));
                 console.log(now.format('jYYYY/jM/jD'));
                 var passedDayes = now.diff(startJDate, 'days');
-                var remainedDayes = endJDate.diff(now, 'days');
-                console.log(passedDayes + ' days passed and ' + remainedDayes + ' days remained!');
+                // var remainedDayes = endJDate.diff(now, 'days');
+                // console.log(passedDayes + ' days passed and ' + remainedDayes + ' days remained!');
             })
         });
     </script>

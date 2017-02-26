@@ -15,37 +15,54 @@
     <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap-rtl/dist/css/bootstrap-rtl.min.css">
     <link rel="stylesheet" type="text/css" href="./bower_components/persian-datepicker/dist/css/persian-datepicker-0.4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="./bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="./css/style.min.css">
 </head>
 
 <body>
-  <header>
-    <h1>خدمت‌سنج</h1>
-    <p>یادگاری یک برنامه‌نویس از دوران خدمت!</p>
-  </header>
-<div class="container">
-    <input type="text" class="start" placeholder="تاریخ شروع خدمت را وارد کنید" />
-    <div class="checkbox">
-        <label>
-    <input type="checkbox" name="kasri" id="kasri" value="kasri">
-    کسری دارم
-  </label>
+    <header>
+        <h1>خدمت‌سنج</h1>
+        <p>یادگاری یک برنامه‌نویس از دوران خدمت!</p>
+    </header>
+    <div class="container main">
+        <div class="starter"><input type="text" class="start" placeholder="تاریخ شروع خدمت را وارد کنید" /></div>
+        <div class="row">
+          <div class="option col-sm-6 col-xs-12">
+              <div class="checkbox">
+                  <label>
+          <input type="checkbox" name="kasri" id="kasri" value="kasri">
+          کسری دارم
+          </label>
+                  <br>
+                  <label>
+          <input type="checkbox" name="ezafi" id="ezafi" value="ezafi">
+          اضافه خدمت دارم
+          </label>
+              </div>
+              </div>
+              <div class="howmuch col-sm-6 col-xs-12"><input type="number" placeholder="چند روز؟"></div>
+
+
+
+        </div>
+  <button type="button" class="btn btn-primary">بزن بریم!</button>
     </div>
-    <div class="checkbox">
-        <label>
-    <input type="checkbox" name="ezafi" id="ezafi" value="ezafi">
-    اضافه خدمت دارم
-  </label>
-    </div>
 
-
-    <button type="button">بزن بریم!</button>
-
-</div>
+    <footer class="container" id="copyright">
+      <p>ساخته شده با <i class="fa fa-heart" aria-hidden="true"></i> توسط <a href="https://twitter.com/maryayi" target="_blank">مهدی آریایی</a></p>
+        <p>هیچ حقی برای هیچکس محفوظ نیست!</p>
+    </footer>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
+            $('input[type="checkbox"]').change(function() {
+              if (this.checked) {
+                $(".howmuch").fadeIn();
+              } else {
+                $(".howmuch").fadeOut();
+              }
+            })
 
-            $('input[type="checkbox"]').on('change', function () {
+            $('input[type="checkbox"]').on('change', function() {
                 $('input[type="checkbox"]').not(this).prop('checked', false);
             });
 
@@ -53,7 +70,7 @@
                 format: "YYYY/MM/DD"
             });
             $(".start").val("");
-            $('button').on('click', function () {
+            $('button').on('click', function() {
                 var startJDate = moment($(".start").val(), 'jYYYY/jM/jD');
                 var now = moment();
                 console.log(startJDate.format('jYYYY/jM/jD'));

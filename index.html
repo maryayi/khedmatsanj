@@ -27,39 +27,57 @@
     <div class="container main">
         <div class="starter"><input type="text" class="start" placeholder="تاریخ شروع خدمت را وارد کنید" /></div>
         <div class="row">
-          <div class="option col-sm-6 col-xs-12">
-              <div class="checkbox">
-                  <label>
+            <div class="option col-sm-6 col-xs-12">
+                <div class="checkbox">
+                    <label>
           <input type="checkbox" name="kasri" id="kasri" value="kasri">
           کسری دارم
           </label>
-                  <br>
-                  <label>
+                    <br>
+                    <label>
           <input type="checkbox" name="ezafi" id="ezafi" value="ezafi">
           اضافه خدمت دارم
           </label>
-              </div>
-              </div>
-              <div class="howmuch col-sm-6 col-xs-12"><input type="number" placeholder="چند روز؟"></div>
+                </div>
+            </div>
+            <div class="howmuch col-sm-6 col-xs-12"><input type="number" placeholder="چند روز؟"></div>
 
 
 
         </div>
-  <button type="button" class="btn btn-primary">بزن بریم!</button>
+        <button type="button" class="btn btn-primary">بزن بریم!</button>
+    </div>
+
+    <div class="container chart">
+        <canvas id="piechart" width="300" height="300"></canvas>
     </div>
 
     <footer class="container" id="copyright">
-      <p>ساخته شده با <i class="fa fa-heart" aria-hidden="true"></i> توسط <a href="https://twitter.com/maryayi" target="_blank">مهدی آریایی</a></p>
+        <p>ساخته شده با <i class="fa fa-heart" aria-hidden="true"></i> توسط <a href="https://twitter.com/maryayi" target="_blank">مهدی آریایی</a></p>
         <p>هیچ حقی برای هیچکس محفوظ نیست!</p>
     </footer>
     <script type="text/javascript">
+    function ConvertNumberToPersion(str) {
+        var str = str.replace(/0/i, '۰');
+        var str = str.replace(/1/i, '۱');
+        var str = str.replace(/2/i, '۲');
+        var str = str.replace(/3/i, '۳');
+        var str = str.replace(/4/i, '۴');
+        var str = str.replace(/5/i, '۵');
+        var str = str.replace(/6/i, '۶');
+        var str = str.replace(/7/i, '۷');
+        var str = str.replace(/8/i, '۸');
+        var str = str.replace(/9/i, '۹');
+        return str;
+      }
+
         $(document).ready(function() {
             $('input[type="checkbox"]').change(function() {
-              if (this.checked) {
-                $(".howmuch").fadeIn();
-              } else {
-                $(".howmuch").fadeOut();
-              }
+                if (this.checked) {
+                    $(".howmuch").fadeIn();
+                } else {
+                    $(".howmuch").fadeOut();
+                }
             })
 
             $('input[type="checkbox"]').on('change', function() {
@@ -79,6 +97,72 @@
                 // var remainedDayes = endJDate.diff(now, 'days');
                 // console.log(passedDayes + ' days passed and ' + remainedDayes + ' days remained!');
             })
+
+            var piechart = $("#piechart");
+
+            var data = {
+                datasets: [{
+                    data: [
+                        11,
+                        16
+                    ],
+                    backgroundColor: [
+                        "#66de4e",
+                        "#e65757"
+                    ],
+                    label: 'My dataset' // for legend
+                }],
+                labels: [
+                    "خدمت سپری شده",
+                    "خدمت باقی مانده"
+                ]
+            };
+
+            var pieOptions = {
+                events: false,
+                animation: {
+                    duration: 500,
+                    easing: "easeOutQuart",
+                    onComplete: function() {
+                        var ctx = this.chart.ctx;
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+
+                        this.data.datasets.forEach(function(dataset) {
+
+                            for (var i = 0; i < dataset.data.length; i++) {
+                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                    total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                                    mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius) / 2,
+                                    start_angle = model.startAngle,
+                                    end_angle = model.endAngle,
+                                    mid_angle = start_angle + (end_angle - start_angle) / 2;
+
+                                var x = mid_radius * Math.cos(mid_angle);
+                                var y = mid_radius * Math.sin(mid_angle);
+                                ctx.font = "24px 'Vazir',sans-serif";
+                                ctx.fillStyle = '#fff';
+                                if (i == 3) { // Darker text color for lighter background
+                                    ctx.fillStyle = '#444';
+                                }
+                                var percent = String(Math.round(dataset.data[i] / total * 100)) + "%";
+                                percent = ConvertNumberToPersion(percent);
+                                // ctx.fillText(dataset.data[i], model.x + x, model.y + y);
+                                // Display percent in another line, line break doesn't work for fillText
+                                ctx.fillText(percent, model.x + x, model.y + y + 15);
+                            }
+                        });
+                    }
+                }
+            };
+
+            var pieChartCanvas = $("#piechart");
+            var pieChart = new Chart(pieChartCanvas, {
+                type: 'pie', // or doughnut
+                data: data,
+                options: pieOptions
+            });
         });
     </script>
 </body>

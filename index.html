@@ -202,7 +202,7 @@
         $('#startDate').html(ConvertNumberToPersion(result.startJDate.format('jYYYY/jM/jD')));
         $('#todayDate').html(ConvertNumberToPersion(result.now.format('jYYYY/jM/jD')));
         $('#endDate').html(ConvertNumberToPersion(result.endJDate.format('jYYYY/jM/jD')));
-        $('#durationTime').html(ConvertNumberToPersion(String(result.paye)) + ' ماه');
+        $('#durationTime').html(ConvertNumberToPersion(String(result.passedDayes + result.remainedDayes)) + ' روز');
         $('#passedTime').html(ConvertNumberToPersion(String(result.passedDayes)) + ' روز');
         $('#remainedTime').html(ConvertNumberToPersion(String(result.remainedDayes)) + ' روز');
       }

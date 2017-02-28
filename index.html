@@ -122,13 +122,18 @@
           } else if ($("#ezafi").is(':checked') && $("#howmuch").val()>0) {
             result.endJDate.add($("#howmuch").val(),'day');
           }
-          result.passedDayes = result.now.diff(result.startJDate, 'days');
-          result.remainedDayes = result.endJDate.diff(result.now, 'days');
-          result.msg = 'از خدمت شما ' + result.passedDayes + ' روز گذشته و ' + result.remainedDayes + ' روز باقی مانده است.';
-          console.log(result.startJDate.format('jYYYY/jM/jD'));
-          console.log(result.now.format('jYYYY/jM/jD'));
-          console.log(result.endJDate.format('jYYYY/jM/jD'));
-          console.log(result.msg);
+          if (Number(result.now.format('X')) <= Number(result.startJDate.format('X'))) {
+            result.passedDayes = '0';
+            result.remainedDayes = result.endJDate.diff(result.startJDate, 'days');
+          } else {
+            result.passedDayes = result.now.diff(result.startJDate, 'days');
+            result.remainedDayes = result.endJDate.diff(result.now, 'days');
+          }
+          // result.msg = 'از خدمت شما ' + result.passedDayes + ' روز گذشته و ' + result.remainedDayes + ' روز باقی مانده است.';
+          // console.log(result.startJDate.format('jYYYY/jM/jD'));
+          // console.log(result.now.format('jYYYY/jM/jD'));
+          // console.log(result.endJDate.format('jYYYY/jM/jD'));
+          // console.log(result.msg);
           return result;
       }
 
@@ -202,7 +207,7 @@
         $('#startDate').html(ConvertNumberToPersion(result.startJDate.format('jYYYY/jM/jD')));
         $('#todayDate').html(ConvertNumberToPersion(result.now.format('jYYYY/jM/jD')));
         $('#endDate').html(ConvertNumberToPersion(result.endJDate.format('jYYYY/jM/jD')));
-        $('#durationTime').html(ConvertNumberToPersion(String(result.passedDayes + result.remainedDayes)) + ' روز');
+        $('#durationTime').html(ConvertNumberToPersion(String(Number(result.passedDayes) + Number(result.remainedDayes))) + ' روز');
         $('#passedTime').html(ConvertNumberToPersion(String(result.passedDayes)) + ' روز');
         $('#remainedTime').html(ConvertNumberToPersion(String(result.remainedDayes)) + ' روز');
       }

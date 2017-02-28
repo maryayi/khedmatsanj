@@ -125,6 +125,9 @@
           if (Number(result.now.format('X')) <= Number(result.startJDate.format('X'))) {
             result.passedDayes = '0';
             result.remainedDayes = result.endJDate.diff(result.startJDate, 'days');
+          } else if (Number(result.now.format('X')) >= Number(result.endJDate.format('X'))) {
+            result.passedDayes = result.endJDate.diff(result.startJDate, 'days');
+            result.remainedDayes = '0';
           } else {
             result.passedDayes = result.now.diff(result.startJDate, 'days');
             result.remainedDayes = result.endJDate.diff(result.now, 'days');

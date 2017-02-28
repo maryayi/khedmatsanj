@@ -26,6 +26,14 @@
     </header>
     <div class="container main">
         <div class="starter"><input type="text" class="start" placeholder="تاریخ شروع خدمت را وارد کنید" /></div>
+        <div class="payebox">
+          <label for="paye">زمان پایه خدمتی: &nbsp;
+          <input type="radio" name="paye" value="18">۱۸ ماه &nbsp;
+          <input type="radio" name="paye" value="19">۱۹ ماه &nbsp;
+          <input type="radio" name="paye" value="21" checked="checked">۲۱ ماه &nbsp;
+          <input type="radio" name="paye" value="24">۲۴ ماه
+          </label>
+        </div>
         <div class="row">
             <div class="option col-sm-6 col-xs-12">
                 <div class="checkbox">
@@ -51,6 +59,18 @@
     <div class="container chart">
       <div class="row"><div class="table-div col-md-6 col-xs-12">
         <table class="table">
+          <tr>
+            <th>تاریخ شروع خدمت</th>
+            <td>۱۰ روز</td>
+          </tr>
+          <tr>
+            <th>تاریخ امروز</th>
+            <td>۱۰ روز</td>
+          </tr>
+          <tr>
+            <th>تاریخ پابان خدمت</th>
+            <td>۱۰ روز</td>
+          </tr>
           <tr>
             <th>طول کل خدمت</th>
             <td>۱۰ روز</td>
@@ -93,10 +113,10 @@
 
       function caculateDates() {
           var result = {};
-
+          result.paye = Number($("input[name='paye']:checked").val());
           result.startJDate = moment($(".start").val(), 'jYYYY/jM/jD');
           result.now = moment();
-          result.endJDate = moment($(".start").val(), 'jYYYY/jM/jD').add(21, 'jMonth');
+          result.endJDate = moment($(".start").val(), 'jYYYY/jM/jD').add(result.paye, 'jMonth');
           if($("#kasri").is(':checked') && $("#howmuch").val()>0) {
             result.endJDate.subtract($("#howmuch").val(),'day');
           } else if ($("#ezafi").is(':checked') && $("#howmuch").val()>0) {
